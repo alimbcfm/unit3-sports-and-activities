@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports and Activities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .screen-image {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .center-buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background-color: #008CBA;
+            color: white;
+            border: 3px solid #ffffff;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: #005f7a;
+            transform: scale(1.08);
+        }
+
+        .audio-btn {
+            background-color: #ff9800;
+        }
+
+        .audio-btn:hover {
+            background-color: #e68900;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: 2px solid white;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* الصناديق التفاعلية المضبوطة بدقة 100% */
+        .sport-box {
+            position: absolute;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+            border-radius: 10px;
+        }
+
+        .sport-box:hover, .sport-box:active {
+            border-color: #ffeb3b;
+            background-color: rgba(255, 235, 59, 0.2);
+        }
+
+        /* الصف الأول (Common Sports) */
+        .tennis { top: 12%; left: 1%; width: 18.5%; height: 38%; }
+        .football { top: 12%; left: 21%; width: 18.5%; height: 38%; }
+        .basketball { top: 12%; left: 41%; width: 18.5%; height: 38%; }
+        .horse-riding { top: 12%; left: 61%; width: 18.5%; height: 38%; }
+        .volleyball { top: 12%; left: 81%; width: 18.5%; height: 38%; }
+
+        /* الصف الثاني (Dangerous Sports) */
+        .scuba-diving { top: 58%; left: 1%; width: 18.5%; height: 38%; }
+        .sky-diving { top: 58%; left: 21%; width: 18.5%; height: 38%; }
+        .hang-gliding { top: 58%; left: 41%; width: 18.5%; height: 38%; }
+        .bungee-jumping { top: 58%; left: 61%; width: 18.5%; height: 38%; }
+        .rock-climbing { top: 58%; left: 81%; width: 18.5%; height: 38%; }
+    /* تنسيق توقيع الصفحة الأولى */
+.author-badge {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #ffeb3b;
+    padding: 8px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 2px solid #ffeb3b;
+    z-index: 3000;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    white-space: nowrap;
+}
+    
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- الصفحة الأولى -->
+        <div id="page1" style="width: 100%; height: 100%;">
+            <div class="author-badge">تصميم الاستاذ علي عسيري</div>
+            <img src="sports and activities.png" alt="Sports and Activities" class="screen-image">
+            
+            <div class="center-buttons">
+                <button class="control-btn audio-btn" onclick="playMainAudio()">🔊 الصوت</button>
+                <button class="control-btn" onclick="goToSportsPage()">التالي ➡️</button>
+            </div>
+        </div>
+
+        <!-- الصفحة الثانية: الرياضات -->
+        <div id="page2" class="hidden" style="width: 100%; height: 100%;">
+            <button class="back-btn" onclick="goToHomePage()">⬅️ رجوع   (Back)</button>
+            
+            <!-- زر الاختبار (exam) الجديد -->
+            <button class="control-btn" style="position: absolute; top: 20px; right: 20px; padding: 8px 20px; font-size: 16px; background-color: #27ae60; z-index: 1000;" onclick="openExamDialog()">📝 اختبار (Exam)</button>
+
+            <img src="sports.png" alt="Sports" class="screen-image">
+
+            <!-- الصناديق التفاعلية -->
+            <div class="sport-box tennis" onclick="handleSportClick('tennis')"></div>
+            <div class="sport-box football" onclick="handleSportClick('football')"></div>
+            <div class="sport-box basketball" onclick="handleSportClick('basketball')"></div>
+            <div class="sport-box horse-riding" onclick="handleSportClick('horse riding')"></div>
+            <div class="sport-box volleyball" onclick="handleSportClick('vollyball')"></div>
+
+            <div class="sport-box scuba-diving" onclick="handleSportClick('scuba diving')"></div>
+            <div class="sport-box sky-diving" onclick="handleSportClick('sky diving')"></div>
+            <div class="sport-box hang-gliding" onclick="handleSportClick('hang bliding')"></div>
+            <div class="sport-box bungee-jumping" onclick="handleSportClick('bungi jumpbing')"></div>
+            <div class="sport-box rock-climbing" onclick="handleSportClick('rock climping')"></div>
+        </div>
+    </div>
+
+    <!-- عناصر الصوت والصور -->
+    <audio id="mainAudio" src="sports and activities.mp3"></audio>
+    <audio id="sportAudio"></audio>
+
+    <script>
+        // الكود القديم كما هو بدون أي تغيير
+        function playMainAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.currentTime = 0;
+            audio.play().catch(error => { console.log(error); });
+        }
+
+        function goToSportsPage() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        function goToHomePage() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+        }
+
+        function playSportAudio(filename) {
+            const sportAudio = document.getElementById('sportAudio');
+            sportAudio.src = filename + '.mp3';
+            sportAudio.currentTime = 0;
+            sportAudio.play().catch(error => { console.log(error); });
+        }
+    </script>
+
+
+    <!-- ========================================== -->
+    <!-- فاصل حدود الكود الجديد (نظام الاختبارات) -->
+    <!-- ========================================== -->
+
+    <style>
+        /* تنسيق النافذة الحوارية الملونة للاختبار */
+        #examModal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 450px;
+            width: 90%;
+            border: 4px solid #fff;
+        }
+        .modal-content h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .modal-btn {
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-ok { background-color: #2ecc71; color: white; }
+        .btn-ok:hover { background-color: #27ae60; transform: scale(1.05); }
+        .btn-cancel { background-color: #c0392b; color: white; }
+        .btn-cancel:hover { background-color: #a93226; transform: scale(1.05); }
+
+        /* رسائل النتيجة الفورية الملونة (صح / خطأ) */
+        #feedbackOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            pointer-events: none;
+        }
+        .feedback-box {
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 35px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            animation: popUp 0.3s ease-in-out;
+            border: 3px solid white;
+        }
+        .feedback-correct { background-color: #27ae60; }
+        .feedback-wrong { background-color: #c0392b; }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+
+    <!-- نافذة رسالة "سوف يبدأ الاختبار" -->
+    <div id="examModal" class="hidden">
+        <div class="modal-content">
+            <h2>سوف يبدأ الاختبار</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-ok" onclick="startExam()">OK</button>
+                <button class="modal-btn btn-cancel" onclick="closeExamDialog()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- حاضنة رسائل النتيجة الفورية -->
+    <div id="feedbackOverlay" class="hidden">
+        <div id="feedbackBox" class="feedback-box"></div>
+    </div>
+
+    <script>
+        // مصفوفة تحتوي على الرياضات العشر بترتيب عشوائي أو منتظم للاختبار
+        const sportList = [
+            'tennis', 'football', 'basketball', 'horse riding', 'vollyball',
+            'scuba diving', 'sky diving', 'hang bliding', 'bungi jumpbing', 'rock climping'
+        ];
+        
+        let examQueue = [];
+        let currentTargetSport = "";
+        let isExamActive = false;
+
+        // إظهار نافذة الحوار عند الضغط على زر اختبار
+        function openExamDialog() {
+            document.getElementById('examModal').classList.remove('hidden');
+        }
+
+        // إغلاق النافذة عند الضغط على Cancel
+        function closeExamDialog() {
+            document.getElementById('examModal').classList.add('hidden');
+        }
+
+        // بدء الاختبار عند الضغط على OK
+        function startExam() {
+            document.getElementById('examModal').classList.add('hidden');
+            isExamActive = true;
+            // نسخ وترتيب الأسئلة عشوائياً
+            examQueue = [...sportList].sort(() => Math.random() - 0.5);
+            nextExamQuestion();
+        }
+
+        // طرح السؤال التالي في الاختبار
+        function nextExamQuestion() {
+            if (examQueue.length === 0) {
+                showFeedback("🎉 Great Job! Exam Finished!", true);
+                isExamActive = false;
+                setTimeout(() => {
+                    document.getElementById('feedbackOverlay').classList.add('hidden');
+                }, 3000);
+                return;
+            }
+            currentTargetSport = examQueue[0];
+            playSportAudio(currentTargetSport); // نطق اللعبه المطلوبة
+        }
+
+        // تعديل دالة النقر على الرياضات لتشمل وضع الاختبار
+        function handleSportClick(sportName) {
+            if (!isExamActive) {
+                // الوضع العادي (تشغيل الصوت فقط كما كان)
+                playSportAudio(sportName);
+            } else {
+                // وضع الاختبار
+                if (sportName === currentTargetSport) {
+                    // إجابة صحيحة
+                    showFeedback("✔️ Good", true);
+                    playSportAudio('good job'); // (أو صوت إضافي للنجاح إذا رغبت، حالياً ينطق الكلمة أو يكتفي بالرسالة)
+                    
+                    setTimeout(() => {
+                        document.getElementById('feedbackOverlay').classList.add('hidden');
+                        examQueue.shift(); // إزالة السؤال الحالي
+                        nextExamQuestion(); // الانتقال للسؤال التالي
+                    }, 1500);
+                } else {
+                    // إجابة خاطئة
+                    showFeedback("❌ Try Again", false);
+                    // نطق اللعبة المطلوبة مرة أخرى كما طلبت
+                    setTimeout(() => {
+                        playSportAudio(currentTargetSport);
+                    }, 1000);
+
+                    setTimeout(() => {
+                        document.getElementById('feedbackOverlay').classList.add('hidden');
+                    }, 1500);
+                }
+            }
+        }
+
+        // دالة إظهار رسائل النتيجة الملونة
+        function showFeedback(text, isCorrect) {
+            const overlay = document.getElementById('feedbackOverlay');
+            const box = document.getElementById('feedbackBox');
+            box.innerText = text;
+            box.className = "feedback-box " + (isCorrect ? "feedback-correct" : "feedback-wrong");
+            overlay.classList.remove('hidden');
+        }
+    </script>
+    <!-- كود مؤقت تعطيل البرنامج -->
+<div id="expiryOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:99999; justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(135deg, #e74c3c, #c0392b); padding:40px; border-radius:20px; text-align:center; color:white; box-shadow:0 10px 30px rgba(0,0,0,0.7); max-width:450px; width:90%; border:4px solid #fff;">
+        <h2 style="font-size:30px; margin-bottom:15px; text-shadow:2px 2px 4px rgba(0,0,0,0.4);">رسالة تنبيه</h2>
+        <p style="font-size:20px; margin-bottom:25px; font-weight:bold;">تم تعطيل البرنامج</p>
+        <button onclick="closeApp()" style="background-color:#2ecc71; color:white; border:2px solid white; padding:10px 30px; font-size:18px; font-weight:bold; border-radius:10px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); transition:0.2s;">موافق</button>
+    </div>
+</div>
+
+<script>
+    // حدد هنا تاريخ ووقت التعطيل بدقة (السنة، الشهر (من 0 إلى 11)، اليوم، الساعة، الدقيقة، الثانية)
+    // مثال هنا مضبوط ليتعطل في: 31 ديسمبر 2026، الساعة 12:00 ليلاً
+    const expiryDate = new Date(2026, 11, 31, 0, 0, 0).getTime();
+
+    function checkProgramExpiry() {
+        const now = new Date().getTime();
+        if (now >= expiryDate) {
+            // إظهار نافذة التعطيل وجعل الشاشة غير نشطة
+            document.getElementById('expiryOverlay').style.display = 'flex';
+            // منع التفاعل مع أي عنصر خلف النافذة
+            document.body.style.pointerEvents = 'none';
+            document.getElementById('expiryOverlay').style.pointerEvents = 'auto';
+        }
+    }
+
+    // دالة زر الموافق (لإغلاق أو إنهاء الصفحة)
+    function closeApp() {
+        window.close();
+        // احتياطاً في حال لم تغلُق نافذة المتصفح تلقائياً
+        document.body.innerHTML = "<h1 style='color:white; text-align:center; margin-top:20vh;'>تم إغلاق البرنامج نهائياً.</h1>";
+    }
+
+    // فحص التاريخ كل ثانية
+    setInterval(checkProgramExpiry, 1000);
+    // فحص فوري عند فتح الصفحة
+    window.onload = checkProgramExpiry;
+</script>
